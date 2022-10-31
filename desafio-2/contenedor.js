@@ -3,7 +3,7 @@
  * es decir, que buscar,eliminar pueden generar una id aleatorio (1 hasta 10)
  * y el guardar producto producto tiene una funcion que returna un boolean aleatorio,
  * con ese boolean se determina si se puede guardar o no en el .txt tambien hace algo 
- * simular cuando se elimina todo del .txt .
+ * similar cuando se elimina todo del .txt .
  * 
  * Cada vez que ejecutes el js va a tener resultados diferentes
  * **/
