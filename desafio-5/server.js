@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-//"TIENE QUE QUITAR LOS COMENTARIO PARA QUE FUNCIONE LA handlebars"
+//"TIENE QUE QUITAR LOS COMENTARIO PARA QUE FUNCIONE handlebars"
 
 // app.engine('handlebars', handlebars.engine())
 // app.set('views', './views/handlebars')
@@ -34,29 +34,18 @@ const PORT = 8080;
 const ROUTE = '/api/';
 
 
-
-// app.post('/productos',(req,res)=>{
-//     console.log(req.body);
-// });
-
-
-// app.get('/hello', (req, res) => {
-
-//     return res.render('pug/formulario.pug',{productos:[]  });
-  
-//   });
-
-// app.get('/', (req, res, next) => {
-//      res.render('hbs/inicio.hbs', { 
-//       pageTitle: 'Shop'});
-//   }
-//   );
-
 app.use('/hbs/',routesProduct);
-
 app.use('/ejs/',routesProduct);
 app.use('/pug/',routesProduct);
 
 app.listen(PORT, () => {
     console.log(`Servidor en puerto :${PORT}${ROUTE}`);
 });
+
+
+/*
+Rutas 
+http://localhost:8080/hbs/productos
+http://localhost:8080/ejs/productos
+http://localhost:8080/pug/productos
+**/
