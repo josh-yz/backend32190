@@ -1,0 +1,1 @@
+Los tres son aproximadamente equivalentes en términos de funcionalidad,creo que iré con PUG, es un poco extraño al principio pero el codigo es mas limpio al final

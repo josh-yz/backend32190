@@ -1,0 +1,62 @@
+const express = require('express');
+const app = express();
+
+const handlebars = require('express-handlebars')
+const path = require('path')
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+
+
+
+
+
+//"TIENE QUE QUITAR LOS COMENTARIO PARA QUE FUNCIONE LA handlebars"
+
+// app.engine('handlebars', handlebars.engine())
+// app.set('views', './views/handlebars')
+// app.set('view engine', 'handlebars');
+
+
+app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
+
+
+
+
+///export el router de producto///
+const routesProduct = require('./products/productController');
+
+const PORT = 8080;
+const ROUTE = '/api/';
+
+
+
+// app.post('/productos',(req,res)=>{
+//     console.log(req.body);
+// });
+
+
+// app.get('/hello', (req, res) => {
+
+//     return res.render('pug/formulario.pug',{productos:[]  });
+  
+//   });
+
+// app.get('/', (req, res, next) => {
+//      res.render('hbs/inicio.hbs', { 
+//       pageTitle: 'Shop'});
+//   }
+//   );
+
+app.use('/hbs/',routesProduct);
+
+app.use('/ejs/',routesProduct);
+app.use('/pug/',routesProduct);
+
+app.listen(PORT, () => {
+    console.log(`Servidor en puerto :${PORT}${ROUTE}`);
+});

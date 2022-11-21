@@ -1,0 +1,20 @@
+extends inicio
+
+block content
+    h1(style='color:blue;') Ingrese datos PUG
+    br
+    form(action='/pug/productos', method='post')
+      .form-group
+        label(for='title')
+          b Nombre
+        input#title.form-control(type='text', name='title')
+      .form-group
+        label(for='price')
+          b precio
+        input#price.form-control(type='number', name='price')
+      .form-group
+        label(for='thumbnail')
+          b foto
+        input#thumbnail.form-control(type='text', name='thumbnail')
+      button.btn.btn-success.mt-3.mb-5 Enviar
+    include historial

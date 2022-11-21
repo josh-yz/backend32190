@@ -1,0 +1,19 @@
+<h2 style="color:crimson;">Historial</h2>
+    
+    if productos.length > 0
+        .table-responsive
+            table.table.table-dark
+                tbody
+                    tr(style='color: yellow;')
+                        th Nombre
+                        th Precio
+                        th Foto
+                    for producto in productos
+                        tr
+                            td=producto.title
+                            td=producto.price
+                            td=producto.thumbnail
+    else
+        <h3 class="alert alert-danger">no se encontraron datos</h3>
+
+
