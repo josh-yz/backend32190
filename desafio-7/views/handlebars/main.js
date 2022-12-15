@@ -50,7 +50,7 @@ socket.on("messeges-list", (payload) => {
                <p style="color:blue;font-weight:600;">${msg.email}</p>
                <p style="color:brown;margin-bottom: 0px;
                margin-top: -15px;
-               font-size: 12px;">${msg.date}</p>
+               font-size: 12px;">${msg.timestamp}</p>
                <p style="color:green;font-style: italic;">${msg.text}</p>
               </div>`;
     }).join('');
@@ -69,7 +69,7 @@ function addMessage(event) {
     const message = {
         email: email,
         text: document.getElementById("text").value,
-        date: new Date().toLocaleString(),
+        timestamp: new Date().toLocaleString(),
     };
     socket.emit("message-new", message);
     document.getElementById("text").value =''
