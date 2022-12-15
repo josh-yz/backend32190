@@ -1,0 +1,1 @@
+[{"title":"Audífono In Ear Galaxy Buds2 Pro Violeta","price":194990,"thumbnail":"https://www.pcfactory.cl/public/foto/46750/1_1000.jpg?t=1664308272842","id":1},{"title":"Audífonos Gamer PS5 Pulse 3D Wireless","price":89990,"thumbnail":"https://www.pcfactory.cl/public/foto/39197/1_1000.jpg?t=1659961219152","id":2}]

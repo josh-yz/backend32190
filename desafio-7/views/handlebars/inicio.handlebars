@@ -1,0 +1,48 @@
+<h1 style="color:blue;">Ingrese datos handlebars</h1>
+<br>
+
+<form onsubmit="return addProduct(event)">
+
+    <div class="form-group">
+        <label for="title"><b>Nombre</b></label>
+        <input id="title" class="form-control" type="text" name="title">
+    </div>
+    <div class="form-group">
+        <label for="price"><b>precio</b></label>
+        <input id="price" class="form-control" type="number" name="price">
+    </div>
+    <div class="form-group">
+        <label for="thumbnail"><b>foto</b></label>
+        <input id="thumbnail" class="form-control" type="text" name="thumbnail">
+    </div>
+
+    <button class="btn btn-success mt-3 mb-5">Enviar</button>
+</form>
+
+<h2 style="color:crimson;">Historial</h2>
+
+
+<div class="table-responsive">
+    <table class="table table-dark">
+        <tr style="color: yellow;">
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Foto</th>
+        </tr>
+        <tbody id="data"></tbody>
+    </table>
+</div>
+    <div class="history-container container">
+        <h4>
+            Centro de mensajes
+        </h4>
+        <form class="form-inline" onsubmit="return addMessage(event)" autocomplete="off">
+            <input type="email" required="true" id="email" class="form-control my-2 mr-2" placeholder="Email">
+            <input type="text" required="true" id="text" class="form-control my-2 mr-2" placeholder="Deja tu mensaje..">
+            <input class="btn btn-primary my-2" type="submit" value="Enviar">
+       </form>
+       <div class="messages-container" id="messages"></div>
+    </div>
+
+
+    <script src="./main.js"></script>
