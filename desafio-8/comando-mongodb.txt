@@ -1,0 +1,67 @@
+1).-
+    use ecommerce
+    db.createCollection("mensajes")
+    db.createCollection("productos")
+2).-
+    db.productos.insertMany([
+            {title: 'papel', price: 500, thumbnail: 'url.papel.jpg'},
+            {title: 'muebles', price: 4700, thumbnail: 'url.muebles.jpg'},
+            {title: 'cinta', price: 3170, thumbnail: 'url.tecinta.jpg'},
+            {title: 'hojas', price: 4170, thumbnail: 'urlhojas.jpg'},
+            {title: 'regla', price: 697, thumbnail: 'url.cregla.jpg'},
+            {title: 'ropa', price: 870, thumbnail: 'url.hambugropa.jpg'},
+            {title: 'plastico', price: 1070, thumbnail: 'url.pan_plastico.jpg'},
+            {title: 'silla', price: 150, thumbnail: 'url.silla.jpg'},
+            {title: 'tijeras', price: 990, thumbnail: 'url.tijeras.jpg'},
+            {title: 'medicamentos', price: 5000, thumbnail: 'url.medicamentos.jpg'}])
+
+    db.mensajes.insertMany([
+            {email: 'josh_yz@hotmail.com', message: 'Hola',  timestamp: new ISODate()},
+            {email: 'josh_yz2@hotmail.com', message: 'como', timestamp: new ISODate()},
+            {email: 'josh_yz@hotmail.com', message: 'Hola3', timestamp: new ISODate()},
+            {email: 'josh_yz2@hotmail.com', message: 'como', timestamp: new ISODate()},
+            {email: 'josh_yz@hotmail.com', message: 'Hola5', timestamp: new ISODate()},
+            {email: 'josh_yz2@hotmail.com', message: 'como', timestamp: new ISODate()},
+            {email: 'josh_yz@hotmail.com', message: 'Hola', timestamp: new ISODate()},
+            {email: 'josh_yz2@hotmail.com', message: 'como', timestamp: new ISODate()},
+            {email: 'josh_yz@hotmail.com', message: 'Hola', timestamp: new ISODate()},
+            {email: 'josh_yz2@hotmail.com', message: 'como', timestamp: new ISODate()}])
+    
+3).-
+    db.mensajes.find()
+    db.productos.find()
+4).-
+    db.mensajes.countDocuments()
+    db.productos.countDocuments() 
+5).-  
+    A).-
+        db.productos.insertOne({title: 'atun', price: 1500, thumbnail: 'url.atun.jpg'})
+    B).-
+        I).-
+            db.productos.find({'price' : {$lt: 1000}})
+        II).-
+            db.productos.find({$and: [{"price": { $gt: 1000 }},{"price": { $lt: 3000 }}]})
+        III).-
+            db.productos.find({"price":{$gt : 3000}})
+        IV).-
+            db.productos.find({},{"title": 1, "_id":0}).sort({ "price": 1 }).skip(2).limit(1)
+    C).-
+        db.productos.updateMany({},{$set: {"stock":100}})
+    D).-
+        db.productos.updateMany({"price":{$gt : 4000}},{$set: {"stock":0}})
+    E).-
+        db.productos.deleteMany({"price":{$lt:1000}})
+6).-
+    use admin
+    db.createUser({"user":"Pepe","pwd":"asd456","roles": [{role:"read", db:"ecommerce"}]})
+    //
+
+
+
+
+
+
+    
+
+
+
