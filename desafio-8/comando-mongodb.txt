@@ -54,8 +54,11 @@
 6).-
     use admin
     db.createUser({"user":"Pepe","pwd":"asd456","roles": [{role:"read", db:"ecommerce"}]})
-    //
-
+    
+    - mongod --auth
+    - mongosh -u Pepe -p asd456
+    - db.productos.insertOne({title: 'prueba', price: 1500, thumbnail: 'url.prueba.jpg'})
+    - MongoServerError: not authorized on ecommerce to execute command
 
 
 
