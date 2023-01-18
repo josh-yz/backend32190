@@ -1,0 +1,12 @@
+<div class="container ">
+    <div class="jumbotron">
+        <h1 id="usuario" style="color: green">Hasta luego </h1>
+    </div>
+</div>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('name');
+    console.log(name);
+    document.getElementById("usuario").innerHTML = `Hasta luego ${name}`
+</script>
+
