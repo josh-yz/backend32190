@@ -1,0 +1,110 @@
+*Ejecutar el servidor (modos FORK y CLUSTER) con nodemon verificando el número de
+procesos tomados por node.
+
+MODO FORK
+nodemon server.js
+http://localhost:8081/info
+
+MODE CLUSTER
+nodemon server.js -m cluster
+http://localhost:8081/info
+
+
+*Ejecutar el servidor (con los parámetros adecuados) utilizando Forever, verificando su
+correcta operación. Listar los procesos por Forever y por sistema operativo.
+
+MODO FORK
+forever start server.js
+http://localhost:8081/info
+forever stop server.js
+
+MODE CLUSTER
+forever start server.js -m cluster
+http://localhost:8081/info
+forever stopall
+forever list
+
+*Ejecutar el servidor (con los parámetros adecuados: modo FORK) utilizando PM2 en sus
+modos modo fork y cluster. Listar los procesos por PM2 y por sistema operativo.
+
+MODO FORK
+pm2 start server.js
+http://localhost:8081/info
+pm2 ls
+pm2 delete all 
+
+MODE CLUSTER
+pm2 start server.js -i max
+http://localhost:8081/info
+pm2 ls
+pm2 delete all 
+
+*Tanto en Forever como en PM2 permitir el modo escucha, para que la actualización del
+código del servidor se vea reflejado inmediatamente en todos los procesos.
+
+MODO FORK
+pm2 start server.js --watch
+
+forever start -w server.js
+
+*Hacer pruebas de finalización de procesos fork y cluster en los casos que corresponda.
+
+pm2 start server.js -i max
+pm2 ls
+pm2 stop 0
+pm2 ls
+
+
+*Redirigir todas las consultas a /api/randoms a un cluster de servidores escuchando en el puerto
+8081. El cluster será creado desde node utilizando el módulo nativo cluster.
+El resto de las consultas, redirigirlas a un servidor individual escuchando en el puerto 8080.
+Verificar que todo funcione correctamente.
+
+  1.- C:\>cd nginx
+  2.- Copiar el contenido de nginx-files/nginx-01.conf > nginx.conf
+  3.- nginx -s reload
+
+forever start server.js -p 8081 -m cluster
+http://localhost:8081/api/randoms?cant=10
+
+forever start server.js -p 8080 
+http://localhost:8080/api/randoms?cant=10
+
+forever stopall
+
+Luego, modificar la configuración para que todas las consultas a /api/randoms sean redirigidas a
+un cluster de servidores gestionado desde nginx, repartiéndolas equitativamente entre 4
+instancias escuchando en los puertos 8082, 8083, 8084 y 8085 respectivamente.
+
+  1.- C:\>cd nginx
+  2.- Copiar el contenido de nginx-files/nginx-02.conf > nginx.conf
+  3.- nginx -s reload
+
+forever start server.js -p 8082
+forever start server.js -p 8083
+forever start server.js -p 8084
+forever start server.js -p 8085
+forever list
+
+http://localhost/api/randoms?cant=10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
