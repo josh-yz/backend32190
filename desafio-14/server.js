@@ -214,7 +214,7 @@ if (MODE == 'cluster' && cluster.isMaster) {
   } );
 
   const args = parseArgs(process.argv.slice(2))
-  const PORT = args.p || 8081
+  const PORT = args.p || 8080
 
   server.listen(PORT, async () => {
     mongoBase.dbConnection();
