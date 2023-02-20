@@ -17,6 +17,7 @@ const { fork } = require('child_process')
 const parseArgs = require('minimist')
 const os = require('os');
 const cluster = require('cluster');
+const compression = require('compression');
 require('dotenv').config()
 
 
@@ -25,6 +26,24 @@ module.exports.io = require('socket.io')(server);
 require('./sockets/socket');
 require('./passport/local-auth');
 
+const log = require('./logs/logs')
+
+
+const loggerConsole = log.getLogger('default')
+const loggerArchiveWarn = log.getLogger('warnArchive')
+const loggerArchiveError = log.getLogger('errorArchive')
+
+
+app.use((req, res, next) => {
+  loggerConsole.info(`
+  Ruta consultada: ${req.originalUrl}
+  Metodo ${req.method}`)
+  next()
+})
+
+// app.use(compression({
+//   level: 9, // nivel de compresion
+// }));
 
 app.use(flash());
 app.use(passport.initialize());
@@ -84,6 +103,8 @@ if (MODE == 'cluster' && cluster.isMaster) {
 
   app.use('/api', authRouter);
 
+
+
   app.get('/home', function (req, res) {
     if (!req.session.passport?.user?.email) {
       return res.redirect(302, 'login');
@@ -125,12 +146,12 @@ if (MODE == 'cluster' && cluster.isMaster) {
   });
 
 
-  app.get('/info', (req, res) => {
+  app.get('/info',compression(), (req, res) => {
 
     const table = `
   <table>
   <tr>
-  <th>Directorio actual</th>
+  <th>Directorio acvtual</th>
   <td>${process.cwd()}</td>
   </tr>
   <tr>
@@ -155,34 +176,49 @@ if (MODE == 'cluster' && cluster.isMaster) {
   </tr>
   </table>
   `
-
-
-    res.send(`
-  <h1>Info</h1>
-  ${table}
-  `)
+    res.send(
+      table
+    )
   })
-
+  function calcular(numb){
+    const cant = numb ?? 100000000;
+    const max = 1000;
+    const min = 1;
+    const numbers = [];
+    for(let i = 0; i < cant; i++){
+        let numberRandom = Math.floor((Math.random() * (max - min + 1)) + min);
+        numbers.push(numberRandom);
+    }
+    return numbers.reduce((prev, cur) => ((prev[cur] = prev[cur] + 1 || 1), prev), {})
+}
 
   app.get("/api/randoms", (req, res) => {
     const { cant } = req.query;
-    const forkResult = fork("./utils/calculoRandom");
-    forkResult.on("message", (msg) => {
-      if (msg == 'ready') {
-        forkResult.send(cant ? cant : null);
-      } else {
-        res.json({ data: msg,  pid: process.pid });
-      }
-    });
+    res.json({ data: calcular(cant)});
+    
+    // const forkResult = fork("./utils/calculoRandom");
+    // forkResult.on("message", (msg) => {
+    //   if (msg == 'ready') {
+    //     forkResult.send(cant ? cant : null);
+    //   } else {
+    //     res.json({ data: msg,  pid: process.pid });
+    //   }
+    // });
   });
 
+
+
+  app.get('/*',function (req, res) {
+    loggerArchiveWarn.fatal('No existe la ruta');
+    res.send('No existe la ruta')
+  } );
 
   const args = parseArgs(process.argv.slice(2))
   const PORT = args.p || 8081
 
   server.listen(PORT, async () => {
     mongoBase.dbConnection();
-    console.log(`Servidor en puerto http://localhost:${PORT}`);
+    loggerConsole.debug(`Servidor en puerto http://localhost:${PORT}`);
   });
 
 }
