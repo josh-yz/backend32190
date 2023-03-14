@@ -3,19 +3,24 @@ const { userModel } = require('../models/index');
 
 module.exports = {
     async findAll() {
-        const messages = await userModel.find();
-        return messages;
+        const users = await userModel.find();
+        return users;
+    },
+    async findEmail(email) {
+        const user = await userModel.findOne({email});
+        return user;
     },
     async findByPk(id) {
         try {
-            const message = await userModel.findById(id);
-            return message
+            const user = await userModel.findById(id);
+            return user
         } catch (error) {
             return null;
         }
     },
     async create(user) {
         const newUser = new userModel(user);
+        newUser.password = newUser.encryptPassword(user.password)
         await newUser.save();
         return newUser
     },

@@ -11,12 +11,15 @@ const parseArgs = require('minimist')
 const os = require('os');
 const cluster = require('cluster');
 const compression = require('compression');
+const flash = require('connect-flash');
 require('dotenv').config()
 
 const server = require('http').createServer(app);
 module.exports.io = require('socket.io')(server);
 require('./src/api/sockets/socket');
 require('./src/core/passport/local-auth');
+
+const routesAuth = require('./src/api/routers/authRouter');
 
 const log = require('./src/core/utils/logs')
 const loggerConsole = log.getLogger('default')
@@ -34,7 +37,7 @@ app.use((req, res, next) => {
 // app.use(compression({
 //   level: 9, // nivel de compresion
 // }));
-
+app.use(flash());
 app.use(passport.initialize());
 
 const config = {
@@ -90,7 +93,6 @@ if (MODE == 'cluster' && cluster.isMaster) {
   app.set('views', path.join(__dirname, 'views/handlebars'))
   app.set('view engine', 'handlebars');
 
-  app.use('/api', authRouter);
 
 
 
@@ -196,14 +198,21 @@ if (MODE == 'cluster' && cluster.isMaster) {
   });
 
 
-
-  app.get('/*',function (req, res) {
-    loggerArchiveWarn.fatal('No existe la ruta');
-    res.send('No existe la ruta')
-  } );
-
+  
+  const routes = require('./src/api/routers');
   const args = parseArgs(process.argv.slice(2))
   const PORT = args.p || 8080
+  const ROUTE = '/api/';
+  app.use(routesAuth);
+
+
+  app.use(ROUTE, routes);
+  
+  
+    app.get('/*',function (req, res) {
+      loggerArchiveWarn.fatal('No existe la ruta');
+      res.send('No existe la ruta')
+    } );
 
   server.listen(PORT, async () => {
     mongoBase.dbConnection();

@@ -22,8 +22,9 @@ let usuario = ''
 
 function checkSession() { 
 
+
     const API = 'http://localhost:8080'
-    fetch(`${API}/api/check`,{
+    fetch(`${API}/check`,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -36,6 +37,7 @@ function checkSession() {
         }
     }).then(api => {
 
+        console.log({api});
         usuario = api.data.email;
         document.getElementById("usuario").innerHTML = `Bienvenido ${api.data.email}`
     }).catch(error => {
@@ -62,9 +64,9 @@ socket.on('products-list', (payload) => {
     const html = productos.map((product) => {
         return `
               <tr>
-                <td>${product.title}</td>
-                <td>${product.price}</td>
-                <td>${product.thumbnail}</td>
+                <td>${product.nombre}</td>
+                <td>${product.precio}</td>
+                <td>${product.foto}</td>
               </tr>
               `;
     }).join('');

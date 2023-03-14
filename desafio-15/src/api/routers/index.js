@@ -1,18 +1,15 @@
-// const express = require('express');
-// const router = express.Router();
-
-// const routesAuth = require('./authRouter');
-// const routesProduct = require('./productoRouter');
-// const routesCarrito = require('./carritoRouter');
-// const routesUsuario = require('./usuarioRouter');
-// const routesOrden = require('./ordenRouter');
+const express = require('express');
+const router = express.Router();
 
 
-// router.use('/auth', routesAuth);
-// router.use('/producto', routesProduct);
-// router.use('/carrito', routesCarrito);
-// router.use('/usuario', routesUsuario);
-// router.use('/orden', routesOrden);
+const routesProduct = require('./productRouter');
+const routesMessege = require('./messageRouter');
+const routesUser = require('./userRouter');
 
 
-// module.exports = router;
+
+router.use('/producto', routesProduct);
+router.use('/messege', routesMessege);
+router.use('/usuario', routesUser);
+
+module.exports = router;
