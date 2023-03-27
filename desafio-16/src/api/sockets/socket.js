@@ -1,8 +1,16 @@
 const { io } = require('../../../server');
-const {
-    messageService,
-    productService
-} = require('../services/index')
+// const {
+//     messageService,
+//     productService
+// } = require('../services/index')
+
+
+const messageRepository = require('../repository/messageRepository');
+const productRepository = require('../repository/productRepository');
+
+
+const messageService = new messageRepository();
+const productService = new productRepository();
 
 
 

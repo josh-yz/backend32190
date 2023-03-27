@@ -1,20 +1,24 @@
-const { messageService } = require('../services');
+const messageRepository = require('../repository/messageRepository');
 
+class MessageController {
+    constructor (){
+        this.messageService = new messageRepository()
+    }
 
-module.exports = {
     async getMessage(req, res) {
-        let messeges = await messageService.findAll();
-        if (messeges.length == 0) {
+        let messages = await  this.messageService.findAll();
+        if (messages.length == 0) {
             res.status(204).json();
         } else {
             res.status(200).json({
-                data: messeges
+                data: messages
             });
         }
-    },
+    }
+
     async getMessageId(req, res) {
         const { id } = req.params;
-        let productos = await messageService.findByPk(id);
+        let productos = await this.messageService.findByPk(id);
         if (!productos) {
             res.status(204).json();
         } else {
@@ -22,10 +26,11 @@ module.exports = {
                 data: productos
             });
         }
-    },
+    }
+
     async postMessage(req, res) {
         const { nombre, apellido, email, edad, alias, avatar } = req.body;
-        let newMessage = await messageService.create({ nombre, apellido, email, edad, alias, avatar })
+        let newMessage = await this.messageService.create({ nombre, apellido, email, edad, alias, avatar })
         if (!newMessage) {
             res.status(204).json();
         } else {
@@ -33,11 +38,12 @@ module.exports = {
                 data: newMessage
             });
         }
-    },
+    }
+
     async putMessage(req, res) {
         const { id } = req.params;
         const { nombre, apellido, email, edad, alias, avatar } = req.body;
-        let upMessage = await messageService.update(id, { nombre, apellido, email, edad, alias, avatar })
+        let upMessage = await this.messageService.update(id, { nombre, apellido, email, edad, alias, avatar })
         if (!upMessage) {
             res.status(204).json();
         } else {
@@ -45,10 +51,11 @@ module.exports = {
                 data: upMessage
             });
         }
-    },
+    }
+    
     async deleteMessage(req, res) {
         const { id } = req.params;
-        let message = await messageService.delete(id)
+        let message = await this.messageService.delete(id)
         if (!message) {
             res.status(204).json();
         } else {
@@ -57,5 +64,11 @@ module.exports = {
                 msg: 'Registro eliminado'
             });
         }
-    },
+    }
 }
+
+
+module.exports = MessageController
+ 
+    
+  

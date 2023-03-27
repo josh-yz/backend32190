@@ -1,18 +1,25 @@
+
 const express = require('express');
 const router = express.Router();
+const productController = require('../controllers/productController')
 
-const {
-    getProducto,
-    getProductoId,
-    postProducto,
-    putProducto,
-    deleteProducto
-} = require('../controllers/productController');
+class ProductRouter {
+  constructor() {
+    this.productController = new productController();
+    this.init();
+  }
 
-router.get('/',getProducto); 
-router.get('/:id',getProductoId); 
-router.post('/',postProducto); 
-router.put('/:id',putProducto); 
-router.delete('/:id',deleteProducto); 
+  async init() {
+    router.get('/', async (req, res) =>  await this.productController.getProducto(req, res));
+    router.get('/:id', async (req, res) => await this.productController.getProductoId(req, res))
+    router.post('/', async (req, res) => this.productController.postProducto(req, res) );
+    router.put('/:id', (req, res) => this.productController.putProducto(req, res)); 
+    router.delete('/:id', (req, res) => this.productController.deleteProducto(req, res));
+  }
 
-module.exports = router;
+  getRouter() {
+    return router;
+  }
+}
+
+module.exports = ProductRouter;

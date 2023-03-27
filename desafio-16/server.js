@@ -199,14 +199,17 @@ if (MODE == 'cluster' && cluster.isMaster) {
 
 
   
-  const routes = require('./src/api/routers');
+  //const routes = require('./src/api/routers');
   const args = parseArgs(process.argv.slice(2))
   const PORT = args.p || 8080
   const ROUTE = '/api/';
   app.use(routesAuth);
 
+  const MainRouter = require('./src/api/routers');
 
-  app.use(ROUTE, routes);
+  const mainRouter = new MainRouter();
+
+  app.use(ROUTE, mainRouter.getRouter());
   
   
     app.get('/*',function (req, res) {

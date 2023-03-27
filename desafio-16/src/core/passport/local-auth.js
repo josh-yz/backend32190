@@ -17,7 +17,7 @@ passport.use('local-signup', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
-    const user = await userService.findEmail(email);
+    const user = await userService.findEmail(email.trim());
     if (user) {
         return done(null, false, 'El email no existe')
     }
@@ -31,8 +31,7 @@ passport.use('local-signin', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
-    const user = await userService.findEmail(email);
-    console.log(user);
+    const user = await userService.findEmail(email.trim());
 
     if (!user) {
         return done(null, false, req.flash('signinMessage', 'El usuario no existe'))
