@@ -19,12 +19,13 @@ class ProductController{
 
     async getProductoId(req, res) {
         const { id } = req.params;
-        let productos = await this.productService.findByPk(id);
-        if (!productos) {
+        let producto = await this.productService.findByPk(id);
+        console.log(producto);
+        if (!producto) {
             res.status(204).json();
         } else {
             res.status(200).json({
-                data: productos
+                data: producto
             });
         }
     }
@@ -35,7 +36,7 @@ class ProductController{
         if (!newProducto) {
             res.status(204).json();
         } else {
-            res.status(200).json({
+            res.status(201).json({
                 data: newProducto
             });
         }

@@ -14,7 +14,7 @@ class ProductRepository {
 
     async findByPk(id) {
         try {
-            const product = await this.DAO.findById(id)
+            const product = await this.DAO.findByPk(id)
             return getProductDTO(product)
         } catch (error) {
             return null;
