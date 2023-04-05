@@ -26,6 +26,17 @@ const loggerConsole = log.getLogger('default')
 const loggerArchiveWarn = log.getLogger('warnArchive')
 const loggerArchiveError = log.getLogger('errorArchive')
 
+const { graphqlHTTP } = require('express-graphql')
+const graphQLSchema = require('./src/graphql/shema')
+const graphQLRootValue = require('./src/graphql/rootValue')
+
+app.use('/graphql', graphqlHTTP({
+  schema: graphQLSchema,
+  rootValue: graphQLRootValue(),
+  graphiql: true
+}))
+
+
 
 app.use((req, res, next) => {
   loggerConsole.info(`
@@ -33,6 +44,7 @@ app.use((req, res, next) => {
   Metodo ${req.method}`)
   next()
 })
+
 
 // app.use(compression({
 //   level: 9, // nivel de compresion
