@@ -17,6 +17,7 @@ async function login(event) {
         })
     });
 
+
         window.location.href = "home";
     
 

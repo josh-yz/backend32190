@@ -1,5 +1,6 @@
-const express = require('express');
-const router = express.Router();
+const Router = require('koa-router');
+
+const router = new Router();
 
 //Controllers
 const {
@@ -25,4 +26,4 @@ router.post('/register',passport.authenticate('local-signup',{
 router.get('/check',getCheckSession);
 router.get('/logout',getLogout);
 
-module.exports = router;
+module.exports = router.routes();

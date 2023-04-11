@@ -17,6 +17,7 @@ passport.use('local-signup', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
+    
     const user = await userService.findEmail(email.trim());
     if (user) {
         return done(null, false, 'El email no existe')

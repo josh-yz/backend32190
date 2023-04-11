@@ -1,10 +1,9 @@
 let socket = io();
-
 const btnLogin = document.getElementById('btnLogin');
 
 btnLogin.addEventListener('click', async()=>{
-
-    let response = await fetch(`http://localhost:8080/api/Logout`,{
+    const API = 'http://localhost:8080'
+    let response = await fetch(`${API}/logout`,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -22,7 +21,6 @@ let usuario = ''
 
 function checkSession() { 
 
-
     const API = 'http://localhost:8080'
     fetch(`${API}/check`,{
         method: 'GET',
@@ -37,7 +35,7 @@ function checkSession() {
         }
     }).then(api => {
 
-        console.log({api});
+
         usuario = api.data.email;
         document.getElementById("usuario").innerHTML = `Bienvenido ${api.data.email}`
     }).catch(error => {

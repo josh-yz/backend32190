@@ -24,30 +24,32 @@ module.exports = {
 
 
     },
-    async getCheckSession(req, res) {
-        const userSession = req.session?.passport?.user;
-    
+    async getCheckSession(ctx) {
+        const userSession = ctx.session?.passport?.user;
+      
         if (!userSession) {
-            return res.status(202).json({
-                estado: true,
-                msg: 'No existe (session)',
-                data: {}
-            });
+          ctx.response.status = 202;
+          ctx.response.body = {
+            estado: true,
+            msg: 'No existe (session)',
+            data: {}
+          };
         } else {
-            return res.status(200).json({
-                estado: true,
-                data: userSession
-            });
+          ctx.response.status = 200;
+          ctx.response.body = {
+            estado: true,
+            data: userSession
+          };
         }
     },
-    async getLogout(req, res) {
-        await req.session.destroy();
-        return res.status(200).json({
-            estado: true,
-            data: {}
-        });
-
-    },
+    async getLogout(ctx) {
+        await ctx.session.destroy();
+        ctx.response.status = 200;
+        ctx.response.body = {
+          estado: true,
+          data: {}
+        };
+      }
 
 
 }
